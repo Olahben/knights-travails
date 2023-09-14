@@ -1,0 +1,1 @@
+import knight from "./knight.js"
