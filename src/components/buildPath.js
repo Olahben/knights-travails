@@ -1,12 +1,12 @@
 import knight from "./knight.js";
 import board from "./board.js";
 
-function buildPath(position) {
+function buildPath() {
   const knightPosition = knight([0, 0]).position;
   const boardArr = board();
   // console.log(knightPosition, boardArr);
 
-  function buildTree(arr) {
+  function buildTree() {
     const root = knightPosition;
     root.first =
       root[0] - 2 >= 0 && root[1] - 1 >= 0 ? [root[0] - 2, root[1] - 1] : false;
@@ -28,4 +28,4 @@ function buildPath(position) {
   }
   buildTree(boardArr);
 }
-buildPath([0, 0]);
+buildPath();
