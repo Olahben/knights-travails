@@ -1,5 +1,5 @@
 function knight(position) {
-  let knightPosition = position;
+  const knightPosition = position;
   return { knightPosition };
 }
 
