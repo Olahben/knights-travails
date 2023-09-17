@@ -1,31 +1,39 @@
 import knight from "./knight.js";
-import board from "./board.js";
 
-function buildPath() {
-  const knightPosition = knight([0, 0]).position;
-  const boardArr = board();
-  // console.log(knightPosition, boardArr);
+function buildPath(position, desiredPosition) {
+  const knightPosition = knight(position).position;
 
-  function buildTree() {
-    const root = knightPosition;
-    root.first =
-      root[0] - 2 >= 0 && root[1] - 1 >= 0 ? [root[0] - 2, root[1] - 1] : false;
-    root.second =
-      root[0] - 2 >= 0 && root[1] + 1 < 8 ? [root[0] - 2, root[1] + 1] : false;
-    root.third =
-      root[0] - 1 >= 0 && root[1] - 2 >= 0 ? [root[0] - 1, root[1] - 2] : false;
-    root.fourth =
-      root[0] - 1 >= 0 && root[1] + 2 < 8 ? [root[0] - 1, root[1] + 2] : false;
-    root.fifth =
-      root[0] + 1 < 8 && root[1] - 2 >= 0 ? [root[0] + 1, root[1] - 2] : false;
-    root.sixth =
-      root[0] + 1 < 8 && root[1] + 2 < 8 ? [root[0] + 1, root[1] + 2] : false;
-    root.seventh =
-      root[0] + 2 < 8 && root[1] - 1 >= 0 ? [root[0] + 2, root[1] - 1] : false;
-    root.eighth =
-      root[0] + 2 < 8 && root[1] + 1 < 8 ? [root[0] + 2, root[1] + 1] : false;
-    console.log(root);
+  function buildTree(root) {
+    console.log("root", root, "desired position:", desiredPosition);
+    // if (JSON.stringify(root) === JSON.stringify(desiredPosition)) return root;
+    const newRoot = {
+      move: root.move,
+      possibilities: {},
+    };
+    // console.log(newRoot);
+    // Assigns all possible moves
+    newRoot.possibilities.first =
+      root.move[0] - 2 >= 0 && root.move[1] - 1 >= 0 ? [root.move[0] - 2, root.move[1] - 1] : false;
+    newRoot.possibilities.second =
+      root.move[0] - 2 >= 0 && root.move[1] + 1 < 8 ? [root.move[0] - 2, root.move[1] + 1] : false;
+    newRoot.possibilities.third =
+      root.move[0] - 1 >= 0 && root.move[1] - 2 >= 0 ? [root.move[0] - 1, root.move[1] - 2] : false;
+    newRoot.possibilities.fourth =
+      root.move[0] - 1 >= 0 && root.move[1] + 2 < 8 ? [root.move[0] - 1, root.move[1] + 2] : false;
+    newRoot.possibilities.fifth =
+      root.move[0] + 1 < 8 && root.move[1] - 2 >= 0 ? [root.move[0] + 1, root.move[1] - 2] : false;
+    newRoot.possibilities.sixth =
+      root.move[0] + 1 < 8 && root.move[1] + 2 < 8 ? [root.move[0] + 1, root.move[1] + 2] : false;
+    newRoot.possibilities.seventh =
+      root.move[0] + 2 < 8 && root.move[1] - 1 >= 0 ? [root.move[0] + 2, root.move[1] - 1] : false;
+    newRoot.possibilities.eighth =
+      root.move[0] + 2 < 8 && root.move[1] + 1 < 8 ? [root.move[0] + 2, root.move[1] + 1] : false;
+    return newRoot;
   }
-  buildTree(boardArr);
+  const result = buildTree({
+    move: knightPosition,
+    possibilities: {},
+  });
+  console.log(result);
 }
-buildPath();
+buildPath([4, 4], [3, 3]);
