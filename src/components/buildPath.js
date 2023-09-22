@@ -2,10 +2,16 @@ import knight from "./knight.js";
 
 function buildPath(position, desiredPosition) {
   const knightPosition = knight(position).position;
+  const moves = new Set();
 
   function buildTree(root) {
     console.log(root.first, desiredPosition);
-    if (JSON.stringify(root.first) === JSON.stringify(desiredPosition)) return;
+    if (JSON.stringify(root.first) === JSON.stringify(desiredPosition)) {
+      console.log("Position found!");
+      return;
+    }
+    if (moves.has(JSON.stringify(root.first))) return;
+    moves.add(JSON.stringify(root.first));
     // Assigns all possible moves
     root.possibilities.first =
       root.first[0] - 2 >= 0 && root.first[1] - 1 >= 0
@@ -47,12 +53,11 @@ function buildPath(position, desiredPosition) {
         first: root.possibilities[key],
         possibilities: {},
       };
-      console.log(newRoot);
-      if (root.possibilities[key]) {
-        // buildTree(newRoot);
+      // console.log(typeof newRoot.first);
+      if (newRoot.first) {
+        buildTree(newRoot);
       }
     }
-    console.log(root);
   }
   const result = buildTree({
     first: knightPosition,
