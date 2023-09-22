@@ -11,6 +11,7 @@
   "rules": {
     "no-console": "off",
     "quotes": "off",
-    "operator-linebreak":"off"
+    "operator-linebreak":"off",
+    "comma-dangle":"off"
   }
 }
