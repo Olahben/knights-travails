@@ -1,8 +1,7 @@
 import knight from "./knight.js";
 
-function buildPath(position, desiredPosition) {
+function buildTree(position, desiredPosition) {
   const knightPosition = knight(position).position;
-  const moves = new Set();
   const queue = [];
 
   function createDataStructure(initMove) {
@@ -23,7 +22,7 @@ function buildPath(position, desiredPosition) {
     return dataStructure;
   }
 
-  const initRoot = createDataStructure(position);
+  const initRoot = createDataStructure(knightPosition);
   queue.push(initRoot);
 
   function createPossibilities(root) {
@@ -73,14 +72,10 @@ function buildPath(position, desiredPosition) {
 
   while (queue.length !== 0) {
     if (JSON.stringify(queue[0].move) === JSON.stringify(desiredPosition)) {
-      console.log("Position found!");
-      console.log(initRoot.possibilities.fifth.possibilities.second);
       return initRoot;
     }
     const move = queue[0];
-    // console.log("move:", move);
     const newNode = createPossibilities(move);
-    // console.log(newNode);
     queue.shift();
     queue.push(newNode.possibilities.first);
     queue.push(newNode.possibilities.second);
@@ -92,4 +87,7 @@ function buildPath(position, desiredPosition) {
     queue.push(newNode.possibilities.eighth);
   }
 }
-buildPath([4, 4], [3, 3]);
+const tree = buildTree([4, 4], [3, 3]);
+// console.log(tree);
+
+export default buildTree;
