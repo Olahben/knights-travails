@@ -3,35 +3,30 @@ import knight from "./knight.js";
 function buildPath(position, desiredPosition) {
   const knightPosition = knight(position).position;
   const moves = new Set();
+  const queue = [];
 
   function createDataStructure(initMove) {
     const dataStructure = {
       move: initMove,
       possibilities: {
-        first: {},
-        second: {},
-        third: {},
-        fourth: {},
-        fifth: {},
-        sixth: {},
-        seventh: {},
-        eighth: {},
+        first: null,
+        second: null,
+        third: null,
+        fourth: null,
+        fifth: null,
+        sixth: null,
+        seventh: null,
+        eighth: null,
       },
     };
 
     return dataStructure;
   }
 
-  function buildTree(root) {
-    console.log(root, desiredPosition);
-    if (JSON.stringify(root.move) === JSON.stringify(desiredPosition)) {
-      console.log("Position found!");
-      return root;
-    }
-    if (moves.has(JSON.stringify(root.move))) return root;
-    moves.add(JSON.stringify(root.move));
-    // Assigns all possible moves
-    console.log("Root before assigning:", root);
+  const initRoot = createDataStructure(position);
+  queue.push(initRoot);
+
+  function createPossibilities(root) {
     root.possibilities.first = createDataStructure(
       root.move[0] - 2 >= 0 && root.move[1] - 1 >= 0
         ? [root.move[0] - 2, root.move[1] - 1]
@@ -73,52 +68,28 @@ function buildPath(position, desiredPosition) {
         : false
     );
 
-    console.log("Root after assigning:", root);
-
-    /* root.possibilities.first =
-      root.first[0] - 2 >= 0 && root.first[1] - 1 >= 0
-        ? [root.first[0] - 2, root.first[1] - 1]
-        : false;
-    root.possibilities.second =
-      root.first[0] - 2 >= 0 && root.first[1] + 1 < 8
-        ? [root.first[0] - 2, root.first[1] + 1]
-        : false;
-    root.possibilities.third =
-      root.first[0] - 1 >= 0 && root.first[1] - 2 >= 0
-        ? [root.first[0] - 1, root.first[1] - 2]
-        : false;
-    root.possibilities.fourth =
-      root.first[0] - 1 >= 0 && root.first[1] + 2 < 8
-        ? [root.first[0] - 1, root.first[1] + 2]
-        : false;
-    root.possibilities.fifth =
-      root.first[0] + 1 < 8 && root.first[1] - 2 >= 0
-        ? [root.first[0] + 1, root.first[1] - 2]
-        : false;
-    root.possibilities.sixth =
-      root.first[0] + 1 < 8 && root.first[1] + 2 < 8
-        ? [root.first[0] + 1, root.first[1] + 2]
-        : false;
-    root.possibilities.seventh =
-      root.first[0] + 2 < 8 && root.first[1] - 1 >= 0
-        ? [root.first[0] + 2, root.first[1] - 1]
-        : false;
-    root.possibilities.eighth =
-      root.first[0] + 2 < 8 && root.first[1] + 1 < 8
-        ? [root.first[0] + 2, root.first[1] + 1]
-        : false; */
-
-    for (let i = 0; i < Object.keys(root.possibilities).length; i += 1) {
-      const keys = Object.keys(root.possibilities);
-      const key = keys[i];
-      console.log("calling:", root.possibilities[key].move);
-      if (root.possibilities[key].move) {
-        buildTree(createDataStructure(root.possibilities[key].move));
-      }
-    }
     return root;
   }
-  const result = buildTree(createDataStructure(knightPosition));
-  console.log(result.possibilities.first);
+
+  while (queue.length !== 0) {
+    if (JSON.stringify(queue[0].move) === JSON.stringify(desiredPosition)) {
+      console.log("Position found!");
+      console.log(initRoot.possibilities.fifth.possibilities.second);
+      return initRoot;
+    }
+    const move = queue[0];
+    // console.log("move:", move);
+    const newNode = createPossibilities(move);
+    // console.log(newNode);
+    queue.shift();
+    queue.push(newNode.possibilities.first);
+    queue.push(newNode.possibilities.second);
+    queue.push(newNode.possibilities.third);
+    queue.push(newNode.possibilities.fourth);
+    queue.push(newNode.possibilities.fifth);
+    queue.push(newNode.possibilities.sixth);
+    queue.push(newNode.possibilities.seventh);
+    queue.push(newNode.possibilities.eighth);
+  }
 }
 buildPath([4, 4], [3, 3]);
