@@ -12,6 +12,7 @@
     "no-console": "off",
     "quotes": "off",
     "operator-linebreak":"off",
-    "comma-dangle":"off"
+    "comma-dangle":"off",
+    "no-param-reassign":"off"
   }
 }
