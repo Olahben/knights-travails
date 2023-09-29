@@ -1,7 +1,5 @@
-import knight from "./knight.js";
-
 function buildTree(position, desiredPosition) {
-  const knightPosition = knight(position).position;
+  const knightPosition = position;
   const queue = [];
 
   function createDataStructure(initMove) {
@@ -87,7 +85,7 @@ function buildTree(position, desiredPosition) {
     queue.push(newNode.possibilities.eighth);
   }
 }
-const tree = buildTree([4, 4], [3, 3]);
+// const tree = buildTree([4, 4], [3, 3]);
 // console.log(tree);
 
 export default buildTree;
