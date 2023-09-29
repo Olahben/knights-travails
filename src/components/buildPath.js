@@ -1,3 +1,9 @@
+const parent = {};
+
+export function getParents() {
+  return parent;
+}
+
 function buildTree(position, desiredPosition) {
   const knightPosition = position;
   const queue = [];
@@ -75,14 +81,39 @@ function buildTree(position, desiredPosition) {
     const move = queue[0];
     const newNode = createPossibilities(move);
     queue.shift();
+    // Store parent of possibilities, and push possibilities into the queue
     queue.push(newNode.possibilities.first);
+    parent[JSON.stringify(newNode.possibilities.first.move)] = JSON.stringify(
+      newNode.move
+    );
     queue.push(newNode.possibilities.second);
+    parent[JSON.stringify(newNode.possibilities.second.move)] = JSON.stringify(
+      newNode.move
+    );
     queue.push(newNode.possibilities.third);
+    parent[JSON.stringify(newNode.possibilities.third.move)] = JSON.stringify(
+      newNode.move
+    );
     queue.push(newNode.possibilities.fourth);
+    parent[JSON.stringify(newNode.possibilities.fourth.move)] = JSON.stringify(
+      newNode.move
+    );
     queue.push(newNode.possibilities.fifth);
+    parent[JSON.stringify(newNode.possibilities.fifth.move)] = JSON.stringify(
+      newNode.move
+    );
     queue.push(newNode.possibilities.sixth);
+    parent[JSON.stringify(newNode.possibilities.sixth.move)] = JSON.stringify(
+      newNode.move
+    );
     queue.push(newNode.possibilities.seventh);
+    parent[JSON.stringify(newNode.possibilities.seventh.move)] = JSON.stringify(
+      newNode.move
+    );
     queue.push(newNode.possibilities.eighth);
+    parent[JSON.stringify(newNode.possibilities.eighth.move)] = JSON.stringify(
+      newNode.move
+    );
   }
 }
 // const tree = buildTree([4, 4], [3, 3]);
