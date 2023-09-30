@@ -1,6 +1,5 @@
 function knight(position) {
-  const knightPosition = position;
-  return { knightPosition };
+  return { position };
 }
 
 export default knight;
